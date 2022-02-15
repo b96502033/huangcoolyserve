@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  huangcoolserve:
+    build:
+      context: .
+    container_name: huangcoolserve
+    ports:
+      - 8888:8080
+    environment:
+      - SWAGGERPORT=${SWAGGERPORT:-8888}
+      - GINPORT=${GINPORT:-8080}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    image: huangcooly/huangcoolyserve
+  

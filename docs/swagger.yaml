@@ -1,0 +1,154 @@
+definitions:
+  paramDto.ParamEmployeeDto:
+    description: User account information with user id and username
+    properties:
+      age:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  paramDto.ParamUserIdDto:
+    description: User account information with user id and username
+    properties:
+      userId:
+        type: string
+      userPassword:
+        type: string
+    type: object
+  paramDto.ParamUserLoginDto:
+    description: 使用者登入資訊 with user id and username
+    properties:
+      userPassword:
+        type: string
+      userWorkId:
+        type: string
+    type: object
+host: localhost:8888
+info:
+  contact: {}
+  description: Swagger API.
+  title: Gin Swagger Demo
+  version: "1.0"
+paths:
+  /huangcoolyserve/empolyee/getEmployee:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: 取得Employee人員
+      tags:
+      - Employee
+  /huangcoolyserver/empolyee/addEmployee:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/paramDto.ParamEmployeeDto'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add a new user to the store
+      tags:
+      - Employee
+  /huangcoolyserver/empolyee/updateEmployee:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Employee name
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 沒填寫預設則為0
+        in: query
+        name: age
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Add a new user to the store
+      tags:
+      - Employee
+  /huangcoolyserver/user/checkUserLoginStatus:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 使用者資訊
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/paramDto.ParamUserIdDto'
+      produces:
+      - application/json
+      responses: {}
+      summary: 驗證使用者的登陸狀態
+      tags:
+      - User
+  /huangcoolyserver/user/getRoleAccessSystem/{userId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Id
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 取得使用者可以使用的Navbar
+      tags:
+      - User
+  /huangcoolyserver/user/getUser:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Id
+        in: query
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 取得User
+      tags:
+      - User
+  /huangcoolyserver/user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 使用者資訊
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/paramDto.ParamUserLoginDto'
+      produces:
+      - application/json
+      responses: {}
+      summary: 使用者進行登入
+      tags:
+      - User
+swagger: "2.0"
