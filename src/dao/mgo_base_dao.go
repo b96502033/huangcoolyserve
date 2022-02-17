@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	"log"
+	"os"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -19,7 +20,7 @@ var dbClient *mongo.Client
 func getDBClient() *mongo.Client {
 	onceDB.Do(func() {
 
-		clientOptions := options.Client().ApplyURI("mongodb+srv://Hao:Hao12345678@huangcluster.fmtgp.mongodb.net")
+		clientOptions := options.Client().ApplyURI(os.Getenv("MONGO"))
 		var ctx = context.TODO()
 		// Connect to MongoDB
 		client, err := mongo.Connect(ctx, clientOptions)

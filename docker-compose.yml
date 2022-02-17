@@ -10,6 +10,7 @@ services:
     environment:
       - SWAGGERPORT=${SWAGGERPORT:-8888}
       - GINPORT=${GINPORT:-8080}
+      - MONGO=${MONGO:-mongodb+srv://Hao:Hao12345678@huangcluster.fmtgp.mongodb.net}
     deploy:
       restart_policy:
         condition: on-failure
