@@ -1,18 +1,50 @@
 version: '3.8'
 
+#services列出所提供服務
 services:
-  huangcoolserve:
+  #服務名稱
+  huangcoolyserve:
     build:
       context: .
-    container_name: huangcoolserve
+    container_name: huangcoolyserve
     ports:
       - 8888:8080
     environment:
       - SWAGGERPORT=${SWAGGERPORT:-8888}
       - GINPORT=${GINPORT:-8080}
-      - MONGO=${MONGO:-mongodb+srv://Hao:Hao12345678@huangcluster.fmtgp.mongodb.net}
+      #連線字串的IP需要用服務名稱台代替
+      - MONGO=${MONGO:-mongodb://admin:123456@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false}
     deploy:
       restart_policy:
         condition: on-failure
     image: huangcooly/huangcoolyserve
-  
+    networks: #網路介面設定，兩個服務都需要在同一個bridge上面
+      - mongo-network
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+    volumes:
+      - mongo-configdb:/data/configdb
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    networks: #網路介面設定，兩個服務都需要在同一個bridge上面
+      - mongo-network
+    command: ["--auth"]
+
+#volume虛擬目錄，如果有使用虛擬目錄需要設定。
+volumes: 
+  mongo-configdb:
+  #external: true會去找外部的已經建立好的volume，否則會自己增加一個huangcoolyserve_mongo-configdb的volume出來
+   external: true
+  mongo-data:
+   external: true
+#網路介面，如果有使用自行設定網路介面需要設定。
+networks: 
+  #external: true network也可以設定，但在此沒有設定的原因是因為，這設定通常可以自動生成就好，不會去弄一個外部的network進來
+  mongo-network:
+    driver: bridge
