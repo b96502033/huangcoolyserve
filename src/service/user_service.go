@@ -34,7 +34,6 @@ func (us *UserService) Login(paramUserLoginDto *paramDto.ParamUserLoginDto) *dto
 
 	usrLoginDto := new(dto.UserLoginDto)
 	comUserDao := dao.NewComUserDao()
-	fmt.Println(paramUserLoginDto.UserWorkId)
 	checkComUser, _ := comUserDao.GetComUserByUserWorkId(paramUserLoginDto.UserWorkId)
 	if checkComUser == nil {
 		usrLoginDto.ResponseStatusId = -2

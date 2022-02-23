@@ -28,13 +28,7 @@ func main() {
 		employeeController.PUT("updateEmployee", c.UpdateEmployee)
 	}
 
-	userController := router.Group("/huangcoolyserver/user")
-	{
-		userController.GET("getUser", c.GetUser)
-		userController.POST("login", c.Login)
-		userController.POST("checkUserLoginStatus", c.CheckUserLoginStatus)
-		userController.GET("getRoleAccessSystem/:userId", c.GetRoleAccessSystem)
-	}
+	setUserRouter(router, c)
 
 	pgConnString := fmt.Sprintf("http://localhost:%s/swagger/doc.json",
 		os.Getenv("SWAGGERPORT"))
@@ -61,4 +55,16 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Next()
 	}
+}
+
+func setUserRouter(router *gin.Engine, c *controller.BaseController) *gin.Engine {
+	userController := router.Group("/huangcoolyserver/user")
+	{
+		userController.GET("getUser", c.GetUser)
+		userController.POST("login", c.Login)
+		userController.POST("checkUserLoginStatus", c.CheckUserLoginStatus)
+		userController.GET("getRoleAccessSystem/:userId", c.GetRoleAccessSystem)
+	}
+
+	return router
 }

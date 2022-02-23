@@ -10,7 +10,7 @@
 | 透過mongo-go-driver存取mongoDB|  Ｖ    |
 | 建立DockerFile為此後台的建立image|  Ｖ    |
 |於AWS EC2部署此Docker image|  Ｖ    |
-| 建立Unit Test，進行測試|      |
+| 建立Unit http Test，針對每一個接口，進行測試 |  V    |
 | 將所需要的資源放置AWS S3|      |
 | 進行與前台互動的功能開發|      |
 
